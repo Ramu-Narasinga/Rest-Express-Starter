@@ -1,4 +1,7 @@
 import express from 'express';
+import bodyparser from 'body-parser';
+import cors from 'cors';
+import helmet from 'helmet';
 
 const app = express();
 
@@ -6,6 +9,8 @@ app.get('/', (req, res) => {
     res.send('Well done!');
 })
 
-app.listen(3000, () => {
-    console.log('The application is listening on port 3000!');
+
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`The application is listening on port ${PORT}!`);
 })
