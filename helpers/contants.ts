@@ -1,0 +1,1 @@
+export const Successful_Signup = 'You have been successfully signed up.'

@@ -2,9 +2,9 @@ import { body } from 'express-validator/check';
 
 export function signupBodyValidation() {
     return [ 
-        body('userName', "userName doesn't exists").exists(),
+        body('firstName', "firstName doesn't exist").exists(),
+        body('lastName').optional(),
         body('email', "Invalid email").exists().isEmail(),
-        body('phone').optional().isInt(),
-        body('status').optional().isIn(['enabled', 'disabled'])
+        body('password').exists().isString()
     ]
 }

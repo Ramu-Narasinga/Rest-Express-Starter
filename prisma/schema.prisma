@@ -11,14 +11,16 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  uuid            String      @default(uuid())
-  firstName String    @map("first_name")
-  lastName  String    @map("last_name")
-  email     String    @unique
-  password  String
+  id            Int         @id @default(autoincrement())
+  uuid          String      @default(uuid())
+  firstName     String      @map("first_name")
+  lastName      String      @map("last_name")
+  email         String      @unique
+  password      String
+  // one-one relation with UserSettings table
+  userSettings  UserSettings?
   // one user can have many tasks
-  tasks     Task[]
+  tasks         Task[]
 }
 
 model UserSettings {
