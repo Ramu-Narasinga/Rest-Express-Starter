@@ -15,12 +15,15 @@ import cors from 'cors';
 import {CommonRoutesConfig} from './common/common.routes.config';
 import {UsersRoutes} from './users/users.routes.config';
 import { AuthRoutes } from './auth/auth.routes.config';
+import helmet from 'helmet';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const port = 3000;
 const routes: Array<CommonRoutesConfig> = [];
 const debugLog: debug.IDebugger = debug('app');
+
+app.use(helmet());
 
 // here we are adding middleware to parse all incoming requests as JSON 
 app.use(express.json());
@@ -41,6 +44,9 @@ const loggerOptions: expressWinston.LoggerOptions = {
 
 if (!process.env.DEBUG) {
     loggerOptions.meta = false; // when not debugging, log requests as one-liners
+    if (typeof global.it === 'function') {
+        loggerOptions.level = 'http'; // for non-debug test runs, squelch entirely
+    }
 }
 
 // initialize the logger with the above configuration
@@ -57,7 +63,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.status(200).send(runningMessage)
 });
 
-server.listen(port, () => {
+export default server.listen(port, () => {
     routes.forEach((route: CommonRoutesConfig) => {
         debugLog(`Routes configured for ${route.getName()}`);
     });
